@@ -1,2 +1,2 @@
 # BMS
-Beneficiary Management System of Mohsenin Institute
+Beneficiaries Management System of Mohsenin Institute
