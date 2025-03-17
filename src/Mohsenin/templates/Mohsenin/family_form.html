@@ -1,0 +1,11 @@
+{% extends "base.html" %}  
+
+{% block content %}  
+<h2>{% if family %}Edit Family{% else %}Add Family{% endif %}</h2>  
+<form method="post">  
+    {% csrf_token %}  
+    {{ form.as_p }}  
+    <button type="submit">Save</button>  
+</form>  
+<a href="{% url 'family_list' %}">Cancel</a>  
+{% endblock %} 
