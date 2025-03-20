@@ -2,31 +2,45 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View  
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView  
 from django.urls import reverse_lazy  
-from .models import Family  
-from .forms import FamilyForm, NewFamilyForm
+from .models import Family, Dist
+from .forms import FamilyForm, NewFamilyForm, DistForm
 
 # Create your views here.
 
 def index(request):
     return render(request, 'Mohsenin/index.html')
 
-  # You need to create this form  
+  # You need to create this form 
+  # 
+#------------ Distribution List
+class DistListView(ListView):
+    model = Dist
+    template_name = 'Dist/Dist_list.html'
+
+
+class DistCreateView(CreateView):
+    model = Dist
+    form_class = DistForm
+    template_name = 'Dist/Dist_form.html'
+    success_url = reverse_lazy('dist_list')
+
+
 
 class FamilyListView(ListView):  
     model = Family  
-    template_name = 'Mohsenin/family_list.html'  
+    template_name = 'Family/family_list.html'  
     context_object_name = 'families'  
 
 
 class FamilyCreateView(CreateView):  
     model = Family  
     form_class = NewFamilyForm  # Use a ModelForm for Family  
-    template_name = 'Mohsenin/family_form.html'  
+    template_name = 'Family/family_form.html'  
     success_url = reverse_lazy('family_list')  # Adjust to your URL's name  
 
 
 class FamilyDetailView(View):  
-    template_name = 'Mohsenin/family_detail.html'  
+    template_name = 'Family/family_detail.html'  
 
     def get(self, request, pk):  
         family = get_object_or_404(Family, pk=pk)  
@@ -39,12 +53,12 @@ class FamilyDetailView(View):
 class FamilyUpdateView(UpdateView):  
     model = Family  
     form_class = FamilyForm  # Use a ModelForm for Family  
-    template_name = 'Mohsenin/family_form.html'  
+    template_name = 'Family/family_form.html'  
     success_url = reverse_lazy('family_list')  # Adjust to your URL's name  
 
 
 class FamilyDeactivateView(View):  
-    template_name = 'Mohsenin/family_confirm_deactivate.html'  
+    template_name = 'Family/family_confirm_deactivate.html'  
 
     def get(self, request, pk):  
         family = get_object_or_404(Family, pk=pk)  

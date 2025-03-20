@@ -1,0 +1,43 @@
+{% extends "base.html" %}  
+
+{% block content %} 
+<div class="py-5 vazir-medium no-print">
+<button type="button" class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><a href="{% url 'family_create' %}">افزودن خانواده جدید</a></button>
+</div>
+<h2>لیست خانواده ها</h2>  
+<a href="{% url 'family_create' %}">Add Family</a>  
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"> 
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"> 
+    <tr class='vazir-semibold'>  
+        <th scope="col" class="px-6 py-3 text-end">شماره پرونده</th>  
+        <th scope="col" class="px-6 py-3 text-right">سرپرست خانوار</th>
+        <th scope="col" class="px-6 py-3 text-right">سطح نیاز</th>
+        <th scope="col" class="px-6 py-3 text-right">نوع خانوار</th>  
+        <th scope="col" class="px-6 py-3 text-right">آدرس </th>
+        <th scope="col" class="px-6 py-3 text-right">کدپستی</th>
+        <th scope="col" class="px-6 py-3 text-right">شماره تماس</th>  
+        <th scope="col" class="px-6 py-3 text-center no-print">عملیات</th>  
+    </tr>
+</thead>
+<tbody>  
+    {% for family in families %}  
+    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 vazir-normal">  
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ family.doc_code }}</th>  
+        <td class="px-6 py-4">{{ family.guardian }}</td>
+        <td class="px-6 py-4">{{ family.get_need_level_display }}</td>
+        <td class="px-6 py-4">{{ family.get_family_type_display}}</td>  
+        <td class="px-6 py-4">{{ family.address }}</td>  
+        <td class="px-6 py-4">{{ family.postal_code}}</td>
+        <td class="px-6 py-4">{{ family.contact_number }}</td>  
+        <td  class="px-6 py-4 no-print">  
+            <a href="{% url 'family_detail' family.pk %}">جزئیات</a> |  
+            <a href="{% url 'family_update' family.pk %}">edit</a> |  
+            <a href="{% url 'family_deactivate' family.pk %}">حذف خانواده</a>  
+        </td>  
+    </tr>  
+    {% endfor %}
+</tbody>  
+</table>
+</div>  
+{% endblock %} 

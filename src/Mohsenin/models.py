@@ -2,7 +2,7 @@ from django.db import models
 
 from .choices import NEED_LEVEL_CHOICE, FAMILY_TYPE_CHOICES
 
-class DistList(models.Model): #Distribution List
+class Dist(models.Model): #Distribution List
     name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
@@ -17,7 +17,7 @@ class Family(models.Model):
     address = models.CharField('آدرس',max_length=255)
     contact_number = models.CharField('شماره تماس',max_length=15, blank=True, null=True)
     postal_code = models.CharField('کدپستی',max_length=10, blank=True, null= True)
-    distlist = models.ForeignKey(DistList, verbose_name='لیست توزیع',on_delete=models.SET_NULL, null=True)
+    distlist = models.ForeignKey(Dist, verbose_name='لیست توزیع',on_delete=models.SET_NULL, null=True)
     is_active = models.BooleanField('تحت پوشش',default=True)  # To track if the family is currently receiving support
 
 
