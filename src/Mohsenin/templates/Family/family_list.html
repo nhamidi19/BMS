@@ -1,11 +1,37 @@
-{% extends "base.html" %}  
+{% extends "base.html" %}
+
+
 
 {% block content %} 
 <div class="py-5 vazir-medium no-print">
 <button type="button" class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><a href="{% url 'family_create' %}">افزودن خانواده جدید</a></button>
 </div>
-<h2>لیست خانواده ها</h2>  
-<a href="{% url 'family_create' %}">Add Family</a>  
+<h2 class="vazir-bold text-3xl">لیست خانواده ها</h2>  
+
+<form method="get" action="{% url 'family_list' %}" id="filter-form" class="flex max-w-lg mx-auto no-print">  
+
+    <label for="active-filter" class="block mb-2 text-sm font-medium text-gray-900">پوشش خانواده</label>  
+    <select name="active_filter" id="active-filter" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 vazir-normal">  
+        <option value="all" {% if request.GET.active_filter == 'all' %} selected {% endif %}>همه</option>  
+        <option value="active" {% if request.GET.active_filter == 'active' %} selected {% endif %}>خانواده های فعال</option>  
+        <option value="not_active" {% if request.GET.active_filter == 'not_active' %} selected {% endif %}>خانواده های غیر فعال</option>  
+    </select>  
+
+    <label for="family-type" class="block mb-2 text-sm font-medium text-gray-900">نوع خانواده:</label>  
+    <select name="family_type" id="family-type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 vazir-normal">  
+        <option value="all" {% if request.GET.family_type == 'all' %} selected {% endif %}>همه</option>  
+        <option value="1" {% if request.GET.family_type == '1' %} selected {% endif %}>خانواده ایتام</option>  
+        <option value="2" {% if request.GET.family_type == '2' %} selected {% endif %}>خانواده زندانیان</option>  
+        <option value="3" {% if request.GET.family_type == '3' %} selected {% endif %}>خانواده های طلاق</option>
+        <option value="4" {% if request.GET.family_type == '4' %} selected {% endif %}>خانواده های رها شده</option>
+        <option value="5" {% if request.GET.family_type == '5' %} selected {% endif %}>خانواده های بیماران</option>
+        <option value="6" {% if request.GET.family_type == '6' %} selected {% endif %}>خانواده مستمند</option>
+
+    </select>  
+    
+    <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 vazir-normal">اعمال فیلتر</button>  
+</form>
+
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"> 
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"> 
@@ -31,13 +57,23 @@
         <td class="px-6 py-4">{{ family.postal_code}}</td>
         <td class="px-6 py-4">{{ family.contact_number }}</td>  
         <td  class="px-6 py-4 no-print">  
-            <a href="{% url 'family_detail' family.pk %}">جزئیات</a> |  
-            <a href="{% url 'family_update' family.pk %}">edit</a> |  
-            <a href="{% url 'family_deactivate' family.pk %}">حذف خانواده</a>  
+            <a href="{% url 'family_detail' family.pk %}" class="text-green-700 text-xs">جزئیات
+              </a> |  
+            <a href="{% url 'family_update' family.pk %}" class="text-blue-700 text-xs">ویرایش
+              </a> |  
+            <a href="{% url 'family_deactivate' family.pk %}"class="text-red-700 text-xs">حذف</a>  
         </td>  
     </tr>  
     {% endfor %}
 </tbody>  
 </table>
-</div>  
+</div>
+
+<script>  
+    function updateFilters() {  
+        // Automatically submit the form when a filter is changed  
+        document.getElementById('filter-form').submit();  
+    }  
+</script>  
 {% endblock %} 
+

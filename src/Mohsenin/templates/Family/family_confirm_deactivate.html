@@ -1,10 +1,12 @@
 {% extends "base.html" %}  
 
 {% block content %}  
-<h2>Are you sure you want to deactivate the family: {{ family.guardian }}?</h2>  
+<h2 class="vazir-semibold text-2xl">آیا از غیرفعال کردن پشتیبانی این خانواده اطمینان دارید؟</h2>
+<h3 class="vazir-medium text-xl">شماره پرونده: {{family.doc_code }}</h3>
+<h3 class="vazir-medium text-xl">سرپرست خانوار: {{family.guardian }}</h3>  
 <form method="post">  
     {% csrf_token %}  
-    <button type="submit">Yes, Deactivate</button>  
+    <button type="submit" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 vazir-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">بله اطمینان دارم</button>  
 </form>  
-<a href="{% url 'family_list' %}">Cancel</a>  
+<button type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><a href="{% url 'family_list' %}">انصراف</a></button>  
 {% endblock %} 

@@ -1,7 +1,7 @@
 {% extends "base.html" %}  
 
 {% block content %}  
-<h2>{% if family %}Edit Family{% else %}Add Family{% endif %}</h2>  
+<h2>{% if family %}ویرایش خانواده{% else %}افزودن خانواده جدید{% endif %}</h2>  
 <form method="post">  
     {% csrf_token %}  
     {{ form.as_p }}  

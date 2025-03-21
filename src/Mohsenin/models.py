@@ -4,6 +4,10 @@ from .choices import NEED_LEVEL_CHOICE, FAMILY_TYPE_CHOICES
 
 class Dist(models.Model): #Distribution List
     name = models.CharField(max_length=100, unique=True)
+    note = models.TextField(default="")
+
+    def familycount(self):
+        return self.family_set.count()
 
     def __str__(self):
         return self.name
@@ -33,3 +37,58 @@ class Person(models.Model):
 
     def __str__(self):
         return self.first_name
+    
+class Observation(models.Model):
+    family = models.ForeignKey(Family, on_delete=models.CASCADE)
+    agent_name = models.CharField(max_length=100)
+    observation_date = models.DateField()
+    notes = models.TextField()
+
+    def __str__(self):
+        return f"Observation for {self.family} by {self.agent_name} on {self.observation_date}"
+
+class Package(models.Model):
+    name = models.CharField(max_length=100)
+    max_members = models.PositiveIntegerField()
+    cost = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+class PackageDistribution(models.Model):
+    package = models.ForeignKey(Package, on_delete=models.CASCADE)
+    family = models.ForeignKey(Family, on_delete=models.CASCADE)
+    members = models.ManyToManyField(Person, related_name='packages')
+    distribution_date = models.DateField()
+    is_active = models.BooleanField(default=True)  # To track if the package is still valid for the family
+
+    def __str__(self):
+        return f"{self.package} distributed to {self.family} on {self.distribution_date}"
+
+class MedicalAid(models.Model):
+    family = models.ForeignKey(Family, on_delete=models.CASCADE)
+    medical_needs = models.TextField()
+    estimated_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"Medical Aid for {self.family}"
+
+    def clean(self):
+        # Ensure that sick families have medical needs specified
+        # code 5 means Sick Family
+        if self.family.family_type != 5:
+            raise ValidationError("Medical aid can only be assigned to sick families.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+class InmateRelease(models.Model):
+    family = models.ForeignKey(Family, on_delete=models.CASCADE)
+    release_date = models.DateField()
+    notes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Inmate release for {self.family} on {self.release_date}"

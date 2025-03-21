@@ -3,12 +3,14 @@ INMATE = 2
 DIVORCED = 3
 ABANDONED = 4
 SICK = 5
+POOR = 6
 FAMILY_TYPE_CHOICES = [
     (ORPHAN, 'یتیم'),
     (INMATE, 'زندانی'),
     (DIVORCED, 'مطلقه'),
     (ABANDONED, 'رها شده'),
     (SICK, 'بیمار'),
+    (POOR, 'فقیر')
 
 ]
 
