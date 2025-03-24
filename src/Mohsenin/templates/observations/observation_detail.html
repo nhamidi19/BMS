@@ -1,0 +1,11 @@
+{% extends "base.html" %}  
+
+{% block content %}  
+<h2>خانواده: {{ observation.family }}</h2>  
+<p><strong>نام نماینده:</strong> {{ observation.agent_name }}</p>  
+<p><strong>تاریخ مشاهده:</strong> {{ observation.observation_date }}</p>  
+<p><strong>توضیح:</strong> {{ observation.note }}</p>  
+<a href="{% url 'family_update' family.pk %}">ویرایش </a>  
+<a href="{% url 'family_deactivate' family.pk %}">Deactivate</a>  
+<a href="{% url 'family_list' %}">Back to List</a>  
+{% endblock %} 

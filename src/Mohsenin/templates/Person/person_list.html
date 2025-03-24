@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+
+
+{% block content %} 
+<div class="py-5 vazir-medium no-print">
+</div>
+<h2>توزیع بسته</h2>
+ 
+ 
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"> 
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"> 
+    <tr class='vazir-semibold'>  
+        <th scope="col" class="px-6 py-3 text-end">نام</th>  
+        <th scope="col" class="px-6 py-3 text-right">نام خوانوادگی</th>
+        <th scope="col" class="px-6 py-3 text-right">نام پدر</th>
+        <th scope="col" class="px-6 py-3 text-right">تاریخ تولد</th>
+        <th scope="col" class="px-6 py-3 text-right">کد ملی</th>
+        <th scope="col" class="px-6 py-3 text-right">عملیات</th>
+ 
+    </tr>
+</thead>
+<tbody>  
+    {% for person in persons %} 
+    {% if person.is_guardian %}
+    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 vazir-normal">  
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ person.first_name }}</th>  
+        <td class="px-6 py-4">{{ person.last_name }}</td>
+        <td class="px-6 py-4">{{ person.father_name }}</td>  
+        <td class="px-6 py-4">{{ person.birth_date }}</td>  
+        <td class="px-6 py-4">{{ person.national_id }}</td>  
+        
+        <td  class="px-6 py-4 no-print">    
+            <a href="{% url 'person_detail' person.pk %}" class="text-green-700 text-xs">جزییات</a> |  
+            <a href="{% url 'person_edit' person.family.id person.pk  %}" class="text-blue-700 text-xs">ویرایش</a> |  
+            
+        </td>  
+    </tr>  
+    {% endif %} 
+    {% endfor %}
+</tbody>  
+</table>
+</div>
+{% endblock %}

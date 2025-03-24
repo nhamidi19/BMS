@@ -1,0 +1,11 @@
+{% extends "base.html" %}  
+
+{% block content %}  
+<h2>نام بسته: {{ packagedistribution.package.name }}</h2>  
+<p><strong>خانواده:</strong> {{ packagedistribution.family }}</p>  
+<p><strong>افراد:</strong> {{ packagedistribution.members }}</p>  
+<p><strong>تاریخ توزیع:</strong> {{ packagedistribution.distribution_date }}</p>  
+<p><strong>وضعیت:</strong>{% if packagedistribution.is_active %}فعال{% else %}غیر فعال{% endif %}</p>  
+<a href="{% url 'packageshare_update' packagedistribution.pk %}">ویرایش </a>  
+<a href="{% url 'packageshare_list' %}">برگشت به لیست </a>  
+{% endblock %} 

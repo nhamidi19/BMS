@@ -1,11 +1,11 @@
 {% extends "base.html" %}  
 
 {% block content %}  
-<h2>{% if dist %}ویرایش شخص{% else %}افزودن شص جدید{% endif %}</h2>  
+<h2>{% if dist %}ویرایش بسته{% else %}افزودن بسته جدید{% endif %}</h2>  
 <form method="post">  
     {% csrf_token %}  
     {{ form.as_p }}  
     <button type="submit">ذخیره</button>  
 </form>  
-<a href="{% url 'person_list' family.pk %}">انصراف</a>  
+<a href="{% url 'packages_list' %}">انصراف</a>  
 {% endblock %} 

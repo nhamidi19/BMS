@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+
+
+{% block content %} 
+<div class="py-5 vazir-medium no-print">
+<button type="button" class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><a href="{% url 'packageshare_create' %}">افزودن لیست توزیع جدید</a></button>
+</div>
+<h2>توزیع بسته</h2>
+ 
+ 
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"> 
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"> 
+    <tr class='vazir-semibold'>  
+        <th scope="col" class="px-6 py-3 text-end">بسته</th>  
+        <th scope="col" class="px-6 py-3 text-right">خانواده</th>
+        <th scope="col" class="px-6 py-3 text-right">تاریخ</th>
+        <th scope="col" class="px-6 py-3 text-right">عملیات</th>
+ 
+    </tr>
+</thead>
+<tbody>  
+    {% for packagedistribution in packagedistributions %} 
+    {% if packagedistribution.is_active %}
+    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 vazir-normal">  
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ packagedistribution.package.name }}</th>  
+        <td class="px-6 py-4">{{ packagedistribution.family }}</td>
+        <td class="px-6 py-4">{{ packagedistribution.distribution_date }}</td>  
+        
+        <td  class="px-6 py-4 no-print">    
+            <a href="{% url 'packageshare_detail' packagedistribution.pk %}" class="text-green-700 text-xs">جزییات</a> |  
+            <a href="{% url 'packageshare_update' packagedistribution.pk %}" class="text-blue-700 text-xs">ویرایش</a> |  
+            <a href="{% url 'packageshare_deactive' packagedistribution.pk %}" class="text-red-700 text-xs">غیر فعال</a> |  
+            
+        </td>  
+    </tr>  
+    {% endif %} 
+    {% endfor %}
+</tbody>  
+</table>
+</div>
+{% endblock %}

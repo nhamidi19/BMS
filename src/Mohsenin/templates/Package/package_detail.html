@@ -1,0 +1,10 @@
+{% extends "base.html" %}  
+
+{% block content %}  
+<h2>نام بسته: {{ package.name }}</h2>  
+<p><strong>تعداد افراد:</strong> {{ package.max_members }}</p>  
+<p><strong>قیمت:</strong> {{ package.cost }}</p>  
+<p><strong>توضیحات:</strong> {{ package.description }}</p>  
+<a href="{% url 'package_update' package.pk %}">ویرایش </a>  
+<a href="{% url 'packages_list' %}">برگشت به لیست بسته ها</a>  
+{% endblock %} 
