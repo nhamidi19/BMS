@@ -507,3 +507,15 @@ class PackageDistributionDeactive(View):
         packagedistribution.is_active = False  
         packagedistribution.save()
         return redirect(reverse_lazy('packageshare_list'))
+    
+
+class MedicalAidListView(ListView):
+    template_name = "Medicalaid/medicalaid_list.html"
+    model = MedicalAid
+    context_object_name = "medicalaids"
+
+class MedicalAidCreateView(CreateView):
+    template_name = "Medicalaid/medicalaid_form.html"
+    model = MedicalAid
+    form_class = MedicalAidForm
+    success_url = reverse_lazy("medicalaid_list")
