@@ -1,10 +1,16 @@
 {% extends "base.html" %}  
 
 {% block content %}  
-<h2>نام بسته: {{ package.name }}</h2>  
-<p><strong>تعداد افراد:</strong> {{ package.max_members }}</p>  
-<p><strong>قیمت:</strong> {{ package.cost }}</p>  
-<p><strong>توضیحات:</strong> {{ package.description }}</p>  
-<a href="{% url 'package_update' package.pk %}">ویرایش </a>  
-<a href="{% url 'packages_list' %}">برگشت به لیست بسته ها</a>  
+<div class="container mx-auto py-8 px-4">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-teal-600 mb-4">نام بسته: {{ package.name }}</h2>
+        <p class="mb-2"><strong>تعداد افراد:</strong> {{ package.max_members }}</p>
+        <p class="mb-2"><strong>قیمت:</strong> {{ package.cost }}</p>
+        <p class="mb-2"><strong>توضیحات:</strong> {{ package.description }}</p>
+        <div class="mt-6 flex space-x-4">
+            <a href="{% url 'package_update' package.pk %}" class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 shadow-lg rounded-lg px-4 py-2 text-center">ویرایش</a>
+            <a href="{% url 'packages_list' %}" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg rounded-lg px-4 py-2 text-center">برگشت به لیست بسته‌ها</a>
+        </div>
+    </div>
+</div>
 {% endblock %} 

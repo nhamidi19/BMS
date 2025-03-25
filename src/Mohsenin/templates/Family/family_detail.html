@@ -1,17 +1,23 @@
 {% extends "base.html" %}  
 
 {% block content %}  
-<h2>Family Detail: {{ family.guardian }}</h2>  
-<p><strong>File Number:</strong> {{ family.doc_code }}</p>  
-<p><strong>Address:</strong> {{ family.address }}</p>  
-<p><strong>Active Status:</strong> {{ family.is_active }}</p>  
-<p><strong>Contact Number:</strong> {{ family.contact_number }}</p>  
-<p><strong>Postal Code:</strong> {{ family.postal_code }}</p>  
-<br>
-<a href="{% url 'family_update' family.pk %}" class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 vazir-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">ویرایش</a>  
-<a href="{% url 'family_deactivate' family.pk %}" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 vazir-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">حذف</a>  
-<a href="{% url 'family_list' %}" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 vazir-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">برگشت به لیست خانواده ها</a>  
-<a href="{% url 'person_list' family.pk %}" class="text-white bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-emerald-300 dark:focus:ring-emerald-800 shadow-lg shadow-emerald-500/50 dark:shadow-lg dark:shadow-emerald-800/80 vazir-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">افراد خانواده</a>  
+<div class="container mx-auto py-8 px-4">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-teal-600 mb-4">Family Detail: {{ family.guardian }}</h2>  
+        <p class="mb-2"><strong>شماره پرونده:</strong> {{ family.doc_code }}</p>  
+        <p class="mb-2"><strong>آدرس:</strong> {{ family.address }}</p>  
+        <p class="mb-2"><strong>وضعیت:</strong> {{ family.is_active }}</p>  
+        <p class="mb-2"><strong>شماره تماس:</strong> {{ family.contact_number }}</p>  
+        <p class="mb-2"><strong>کد پستی:</strong> {{ family.postal_code }}</p>  
+        <div class="mt-6 flex space-x-4">
+        <a href="{% url 'family_update' family.pk %}" class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 vazir-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">ویرایش</a>  
+        <a href="{% url 'family_deactivate' family.pk %}" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 vazir-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">حذف</a>  
+        <a href="{% url 'family_list' %}" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 vazir-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">برگشت به لیست خانواده ها</a>  
+        <a href="{% url 'person_list' family.pk %}" class="text-white bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-emerald-300 dark:focus:ring-emerald-800 shadow-lg shadow-emerald-500/50 dark:shadow-lg dark:shadow-emerald-800/80 vazir-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">افراد خانواده</a>  
+        </div>
+    </div>
+</div>
+
 
 <br><br><br>
 <br><br><br>

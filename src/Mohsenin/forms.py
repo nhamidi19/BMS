@@ -36,3 +36,9 @@ class PackageDistributionForm(forms.ModelForm):
     class Meta:
         model = PackageDistribution
         fields = "__all__"
+
+
+class MedicalAidForm(forms.ModelForm):
+    class Meta:
+        model = MedicalAid
+        fields = "__all__"

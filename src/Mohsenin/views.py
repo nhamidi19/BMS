@@ -176,10 +176,12 @@ class PersonListView(ListView):
     context_object_name = 'persons'
     def get(self, request, family_id):
         members = Person.objects.filter(family_id=family_id)
+        family = Family.objects.get(id=family_id)
         for member in members:
             member.birth_date = conver_solar_date(member.birth_date)
         context = {
             "persons" : members,
+            "family": family,
         }
         return render(request , self.template_name, context)
 
@@ -190,6 +192,14 @@ class PersonCreateView(CreateView):
     form_class = NewPersonForm  # Use a ModelForm for Family  
     template_name = 'Person/person_form.html'  
     success_url = reverse_lazy('person_list')  # Adjust to your URL's name 
+
+    def post(self, request, family_id):
+        family = Family.objects.get(id=family_id)
+        form = NewPersonForm(request.POST)
+        family_form = form.save(commit=False)
+        family_form.family = family
+        family_form.save()
+        return redirect("person_list", family_id=family_id)
 
     def form_valid(self, form):
         jalali_date = form.cleaned_data['birth_date']  
