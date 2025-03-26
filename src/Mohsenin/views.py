@@ -4,6 +4,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView , 
 from django.urls import reverse_lazy
 import jdatetime
 from jdatetime import JalaliToGregorian
+from .xml_maker import convert_xml
 from .models import *
 from .forms import *
 
@@ -23,6 +24,7 @@ class DistListView(ListView):
     model = Dist
     template_name = 'Dist/Dist_list.html'
     context_object_name = "dists"
+
 
 
 class DistCreateView(CreateView):
@@ -75,6 +77,10 @@ class FamilyListView(ListView):
             queryset = queryset.filter(family_type=family_type)  
 
         return queryset 
+
+
+def family_list(request):
+    return convert_xml(Family)
 
 
 class FamilyCreateView(CreateView):  
@@ -184,6 +190,9 @@ class PersonListView(ListView):
             "family": family,
         }
         return render(request , self.template_name, context)
+    
+def person_list(requrst):
+    return convert_xml(Person)
 
 
 
@@ -315,7 +324,10 @@ class ObservationListView(View):
         for observation in observations:
             observation.observation_date = conver_solar_date(observation.observation_date)
         
-        return render(request, 'observations/observation_list.html', {'family': family, 'observations': observations})  
+        return render(request, 'observations/observation_list.html', {'family': family, 'observations': observations}) 
+
+def observation_list(request):
+    return convert_xml(Observation) 
 
 
 class ObservationCreateView(View):
@@ -427,6 +439,10 @@ class PackageListView(ListView):
     context_object_name = "packages"
 
 
+def package_list(request):
+    return convert_xml(Package)
+
+
 class PackageCreateView(CreateView):
     template_name = "Package/packages_form.html"
     model = Package
@@ -466,6 +482,10 @@ class PackageDistributionListView(ListView):
         for packagedistribution in queryset:
             packagedistribution.distribution_date = conver_solar_date(packagedistribution.distribution_date)
         return queryset
+    
+
+def packageDistribtion_list(request):
+    return convert_xml(PackageDistribution)
     
 class PackageDistributionCreate(CreateView):
     template_name = "PackageDistribution/packagedistribution_form.html"
@@ -542,6 +562,9 @@ class MedicalAidListView(ListView):
     model = MedicalAid
     context_object_name = "medicalaids"
 
+def medicalaidlist(request):
+    return convert_xml(MedicalAid)
+
 class MedicalAidCreateView(CreateView):
     template_name = "Medicalaid/medicalaid_form.html"
     model = MedicalAid
@@ -594,6 +617,12 @@ class InmateReleaseListView(ListView):
             "inmatereleases": objects
         }
         return render(request, self.template_name, context)
+    
+
+def inmaterelease_list(request):
+    return convert_xml(InmateRelease)
+
+
 
 class InmateReleaseCreateView(CreateView):
     template_name = "InmateRelease/inmaterelease_form.html"

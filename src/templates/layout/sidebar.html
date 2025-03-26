@@ -31,8 +31,14 @@
             <a href="{% url "medicalaid_list" %}" class="text-white hover:underline vazir-normal">نیاز های پزشکی</a>
           </li>
               
-        <li class="mb-2"><a href="#" class="text-blue-500 hover:underline">Link 3</a></li>  
-        <li class="mb-2"><a href="#" class="text-blue-500 hover:underline">Link 4</a></li>  
+          <li class="mb-2 flex">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm1 17h-2v-2h2v2Zm0-4h-2V7h2v8Z"/>
+            </svg>
+            <a href="{% url "inmaterelease_list" %}" class="text-white hover:underline vazir-normal">مدیریت زندانی ها</a>
+          </li>
+          
+          {% comment %} <li class="mb-2"><a href="#" class="text-blue-500 hover:underline">Link 4</a></li>   {% endcomment %}
     </ul>  
 </aside>
 <dv>
