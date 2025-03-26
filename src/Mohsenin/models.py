@@ -1,13 +1,13 @@
 from django.db import models
 
-from .choices import NEED_LEVEL_CHOICE, FAMILY_TYPE_CHOICES
+from .choices import NEED_LEVEL_CHOICE, FAMILY_TYPE_CHOICES, ACTIVATION_CHOICE, YES_NO_CHOICE
 
 class Dist(models.Model): #Distribution List
-    name = models.CharField(max_length=100, unique=True)
-    note = models.TextField(default="")
+    name = models.CharField('نام لیست توزیع', max_length=100, unique=True)
+    note = models.TextField('توضیحات', default="")
 
     def familycount(self):
-        return self.family_set.count()
+        return self.family_set.filter(is_active=True).count()
 
     def __str__(self):
         return self.name
@@ -22,21 +22,27 @@ class Family(models.Model):
     contact_number = models.CharField('شماره تماس',max_length=15, blank=True, null=True)
     postal_code = models.CharField('کدپستی',max_length=10, blank=True, null= True)
     distlist = models.ForeignKey(Dist, verbose_name='لیست توزیع',on_delete=models.SET_NULL, null=True)
-    is_active = models.BooleanField('تحت پوشش',default=True)  # To track if the family is currently receiving support
+    is_active = models.BooleanField('تحت پوشش',default=True, choices=ACTIVATION_CHOICE)
+    
+    def __str__(self):
+        if self.guardian:
+            return "(" + str(self.doc_code) + ")" + "   " + str(self.guardian)
+        else:
+            return "(" + str(self.doc_code) + ")" + "سرپرست تعیین نشده"
 
 
 class Person(models.Model):
-    family = models.ForeignKey(Family, related_name='members', on_delete=models.CASCADE)
+    family = models.ForeignKey(Family, related_name='members', verbose_name='خانواده', on_delete=models.CASCADE)
     first_name = models.CharField('نام',max_length=50)
     last_name = models.CharField('نام خانوادگی',max_length=50)
-    father_name = models.CharField('', max_length=50)
+    father_name = models.CharField('نام پدر', max_length=50)
     national_id = models.CharField('شماره ملی', max_length=10)
     birth_date = models.DateField('تاریخ تولد') #TODO: USE django-jalali
-    is_orphan = models.BooleanField('یتیم')
-    is_guardian = models.BooleanField(default=False)
+    is_orphan = models.BooleanField('یتیم', choices=YES_NO_CHOICE)
+    is_active = models.BooleanField('تحت پوشش', default=True, choices=ACTIVATION_CHOICE)
 
     def __str__(self):
-        return self.first_name
+        return self.first_name + " " +self.last_name
     
 class Observation(models.Model):
     family = models.ForeignKey(Family, on_delete=models.CASCADE)

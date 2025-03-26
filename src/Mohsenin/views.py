@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View  
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView  
 from django.urls import reverse_lazy  
-from .models import Family, Dist
-from .forms import FamilyForm, NewFamilyForm, DistForm
+from .models import Family, Dist, Person
+from .forms import FamilyForm, NewFamilyForm, DistForm, PersonForm
 
 # Create your views here.
 
@@ -31,12 +31,17 @@ class DistUpdateView(UpdateView):
     model = Dist  
     form_class = DistForm  # Use a ModelForm for Family  
     template_name = 'Dist/Dist_form.html'  
-    success_url = reverse_lazy('Dist_list')
+    success_url = reverse_lazy('dist_list')
 
 class DistDeleteView(View):  
     def get(self, request, pk):  
-        dist = get_object_or_404(dist, pk=pk)  
+        dist = get_object_or_404(Dist, pk=pk)  
         return render(request, 'Dist/dist_confirm_delete.html', {'dist': dist})  
+    
+    def post(self, request, pk):  
+        dist = get_object_or_404(Dist, pk=pk)  
+        dist.delete()  
+        return redirect(reverse_lazy('dist_list'))
 
 #------------ Family views
 class FamilyListView(ListView):  
@@ -75,15 +80,16 @@ class FamilyCreateView(CreateView):
 
 
 class FamilyDetailView(View):  
-    template_name = 'Family/family_detail.html'  
+    template_name = 'Family/family_detail.html' 
 
     def get(self, request, pk):  
         family = get_object_or_404(Family, pk=pk)  
         context = {  
-            'family': family  
+            'family': family,  
+            'members': family.members.all()  # Access the members directly from the family instance  
         }  
-        return render(request, self.template_name, context)  
-
+        return render(request, self.template_name, context)
+    
 
 class FamilyUpdateView(UpdateView):  
     model = Family  
@@ -120,7 +126,7 @@ class PersonCreateView(View):
     def get(self, request, family_id):  
         family = get_object_or_404(Family, id=family_id)  
         form = PersonForm(initial={'family': family})  
-        return render(request, 'person/person_form.html', {'form': form, 'family': family})  
+        return render(request, 'person/person_form.html', {'form': form, 'family': family, 'family_id':family_id})  
 
     def post(self, request, family_id):  
         family = get_object_or_404(Family, id=family_id)  
@@ -129,8 +135,8 @@ class PersonCreateView(View):
             new_person = form.save(commit=False)  
             new_person.family = family  
             new_person.save()  
-            return redirect('person_list', family_id=family_id)  
-        return render(request, 'person/person_form.html', {'form': form, 'family': family})  
+            return redirect('family_detail', pk=family_id)  
+        return render(request, 'person/person_form.html', {'form': form, 'family': family, 'family_id': family_id})  
 
 class PersonUpdateView(View):  
     def get(self, request, family_id, pk):  
@@ -143,18 +149,17 @@ class PersonUpdateView(View):
         form = PersonForm(request.POST, instance=person)  
         if form.is_valid():  
             form.save()  
-            return redirect('person_list', family_id=family_id)  
-        return render(request, 'person/person_form.html', {'form': form, 'family_id': family_id})  
+            return redirect('family_detail', pk=family_id)  
+        return render(request, 'person/person_form.html', {'form': form, 'family_id': family_id})
 
-class PersonDeleteView(View):  
-    def get(self, request, family_id, pk):  
-        person = get_object_or_404(Person, pk=pk)  
-        return render(request, 'person/person_confirm_delete.html', {'member': person})  
+def set_guardian(request, family_id, pk):
+    person = get_object_or_404(Person, pk=pk)
+    family = get_object_or_404(Family, id=family_id)
+    family.guardian = person
+    family.save();
+    return redirect('family_detail', pk=family_id)
 
-    def post(self, request, family_id, pk):  
-        person = get_object_or_404(Person, pk=pk)  
-        person.delete()  
-        return redirect('person_list', family_id=family_id)  
+ 
 
 
 #-------------- Observation views

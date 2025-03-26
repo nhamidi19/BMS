@@ -18,10 +18,10 @@ urlpatterns = [
     path('families/<int:pk>/deactivate/', views.FamilyDeactivateView.as_view(), name='family_deactivate'),
 
     #------ Person
-    path('families/<int:family_id>/members/', views.PersonListView.as_view(), name='person_list'),  
-    path('families/<int:family_id>/members/add/', views.PersonCreateView.as_view(), name='person_add'),  
-    path('families/<int:family_id>/members/<int:pk>/edit/', views.PersonUpdateView.as_view(), name='person_edit'),  
-    path('families/<int:family_id>/members/<int:pk>/delete/', views.PersonDeleteView.as_view(), name='person_delete'),  
+    #path('families/<int:family_id>/members/', views.PersonListView.as_view(), name='person_list'),  
+    path('families/<int:family_id>/members/add/', views.PersonCreateView.as_view(), name='person_create'),
+    path('families/<int:family_id>/members/<int:pk>/guardian/', views.set_guardian, name='person_as_guardian'),  
+    path('families/<int:family_id>/members/<int:pk>/edit/', views.PersonUpdateView.as_view(), name='person_update'),  
 
     path('families/<int:family_id>/observations/', views.ObservationListView.as_view(), name='observation_list'),
     

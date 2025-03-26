@@ -22,3 +22,13 @@ NEED_LEVEL_CHOICE = [
     (HIGH, 'شدید'),
     (HIGHEST, 'خیلی شدید'),
 ]
+
+ACTIVATION_CHOICE = [
+    (True, 'تحت حمایت'),
+    (False, 'عدم حمایت'),
+]
+
+YES_NO_CHOICE = [
+    (True,'بله'),
+    (False, 'خیر'),
+]

@@ -6,12 +6,12 @@
 <div class="py-5 vazir-medium no-print">
 <button type="button" class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><a href="{% url 'dist_create' %}">افزودن لیست توزیع جدید</a></button>
 </div>
-<h2>لیتس های توزیع</h2>
+<h2 class="vazir-semibold text-xl">لیست های توزیع</h2>
  
  
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"> 
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"> 
+<table class="w-full text-sm text-left rtl:text-right text-gray-500 border-2 border-gray-700"> 
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50"> 
     <tr class='vazir-semibold'>  
         <th scope="col" class="px-6 py-3 text-end">نام لیست</th>  
         <th scope="col" class="px-6 py-3 text-right">تعداد خانواده ها</th>
@@ -22,8 +22,8 @@
 </thead>
 <tbody>  
     {% for dist in dists %}  
-    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 vazir-normal">  
-        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ dist.name }}</th>  
+    <tr class="{% if forloop.counter|divisibleby:2 %}bg-white{% else %}bg-indigo-50{% endif %} border-b  border-gray-200 hover:bg-gray-50  vazir-normal">  
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ dist.name }}</th>  
         <td class="px-6 py-4">{{ dist.familycount }}</td>
         <td class="px-6 py-4">{{ dist.note }}</td>  
   
