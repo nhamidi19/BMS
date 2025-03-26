@@ -26,8 +26,8 @@
         <td class="px-6 py-4">{{ inmaterelease.release_date }}</td>
   
         <td  class="px-6 py-4 no-print">    
-            {% comment %} <a href="{% url 'package_detail' package.pk %}" class="text-green-700 text-xs">جزییات</a> |  
-            <a href="{% url 'package_update' package.pk %}" class="text-blue-700 text-xs">ویرایش</a> |   {% endcomment %}
+            <a href="{% url 'inmaterelease_detail' inmaterelease.pk %}" class="text-green-700 text-xs">جزییات</a> |  
+            <a href="{% url 'inmaterelease_update' inmaterelease.pk %}" class="text-blue-700 text-xs">ویرایش</a> 
 
             </td>  
     </tr>  

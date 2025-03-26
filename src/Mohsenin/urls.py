@@ -55,7 +55,7 @@ urlpatterns = [
     path("inmaterelease/", views.InmateReleaseListView.as_view(), name="inmaterelease_list"),
     path("inmaterelease/add/", views.InmateReleaseCreateView.as_view(), name="inmaterelease_create"),
     path("inmaterelease/<int:pk_object>/update/", views.InmateReleaseUpdateView.as_view(), name="inmaterelease_update"),
-    path("inmaterelease/int:pk_object>/", views.InmateReleaseDetail.as_view(), name="inmaterelease_detail"),
+    path("inmaterelease/<int:pk_object>/", views.InmateReleaseDetail.as_view(), name="inmaterelease_detail"),
 
 ]
  

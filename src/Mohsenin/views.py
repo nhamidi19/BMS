@@ -196,10 +196,15 @@ class PersonCreateView(CreateView):
     def post(self, request, family_id):
         family = Family.objects.get(id=family_id)
         form = NewPersonForm(request.POST)
-        family_form = form.save(commit=False)
-        family_form.family = family
-        family_form.save()
-        return redirect("person_list", family_id=family_id)
+        if form.is_valid():
+            family_form = form.save(commit=False)
+            family_form.family = family
+            family_form.save()
+            return redirect("person_list", family_id=family_id)
+        else:
+            # در صورت نامعتبر بودن فرم، فرم را دوباره با خطاها رندر کنید
+            return self.render_to_response(self.get_context_data(form=form))
+
 
     def form_valid(self, form):
         jalali_date = form.cleaned_data['birth_date']  
@@ -208,7 +213,10 @@ class PersonCreateView(CreateView):
         ).togregorian()  
 
         form.instance.birth_date = gregorian_date  
+        self.object = form.save()  # Set self.object
         return super().form_valid(form)
+
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Fetch the Family object by ID, ensure the ID is properly provided
@@ -217,7 +225,6 @@ class PersonCreateView(CreateView):
         return context
 
 
-    
 
 
 class PersonDetailView(View):  
@@ -241,23 +248,39 @@ class PersonUpdateView(UpdateView):
     success_url = reverse_lazy('person_list')  
 
     def get_initial(self):
-        initial = super().get_initial()
-        instance = self.get_object()
-        if instance.birth_date:  
-            gregorian_date = instance.birth_date
-            jalali_date = jdatetime.date.fromgregorian(
-                year=gregorian_date.year,
-                month=gregorian_date.month,
-                day=gregorian_date.day
-            )
-            initial['birth_date'] = jalali_date 
-        return initial
+            initial = super().get_initial()
+            instance = self.get_object()
+            if instance.birth_date:  
+                gregorian_date = instance.birth_date
+                jalali_date = jdatetime.date.fromgregorian(
+                    year=gregorian_date.year,
+                    month=gregorian_date.month,
+                    day=gregorian_date.day
+                )
+                initial['birth_date'] = jalali_date  # تاریخ جلالی برای نمایش در فرم
+            return initial
+
+    def form_valid(self, form):
+        jalali_date = form.cleaned_data['birth_date']  # تاریخ واردشده توسط کاربر (جلالی)
+        gregorian_date = jdatetime.date(
+            jalali_date.year, jalali_date.month, jalali_date.day
+        ).togregorian()  # تبدیل به میلادی
+
+        form.instance.birth_date = gregorian_date  # ذخیره تاریخ میلادی در مدل
+        return super().form_valid(form)
+    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Fetch the Family object by ID, ensure the ID is properly provided
         family_id = self.kwargs.get('family_id')  # Assuming you're passing 'family_id' in the URL
         context['family'] = get_object_or_404(Family, id=family_id)
         return context
+    
+
+    def get_success_url(self):
+        family_id = self.kwargs.get('family_id')  # گرفتن family_id از URL
+        return reverse_lazy('person_list', kwargs={'family_id': family_id})  # ساخت success_url با family_id
 
 
 
@@ -523,6 +546,7 @@ class MedicalAidCreateView(CreateView):
     template_name = "Medicalaid/medicalaid_form.html"
     model = MedicalAid
     form_class = MedicalAidForm
+    context_object_name = "inmaterelease"
     success_url = reverse_lazy("medicalaid_list")
 
 class MedicalAidUpdateView(UpdateView):
@@ -539,6 +563,22 @@ class MedicalAidDetailView(DetailView):
     model = MedicalAid
     context_object_name = "medicalaid"
 
+class MedicalAidDeactiveView(View):
+    template_name = "Medicalaid/medicalaid_confirm_deactive.html"
+
+    def get(self, request, pk):  
+        medicalaid = get_object_or_404(MedicalAid, pk=pk)  
+        context = {  
+            'medicalaid': medicalaid  
+        }  
+        return render(request, self.template_name, context)  
+
+    def post(self, request, pk):  
+        medicalaid = get_object_or_404(MedicalAid, pk=pk)  
+        medicalaid.is_active = False  # Set to inactive  
+        medicalaid.save()
+        return redirect(reverse_lazy('medicalaid_list'))
+
 
 #-------------- PackageDistribution views
 class InmateReleaseListView(ListView):
@@ -546,20 +586,75 @@ class InmateReleaseListView(ListView):
     model = InmateRelease
     context_object_name = "inmatereleases"
 
+    def get(self, request):
+        objects = InmateRelease.objects.all()
+        for object_n in objects:
+            object_n.release_date = conver_solar_date(object_n.release_date)
+        context = {
+            "inmatereleases": objects
+        }
+        return render(request, self.template_name, context)
+
 class InmateReleaseCreateView(CreateView):
     template_name = "InmateRelease/inmaterelease_form.html"
     model = InmateRelease
     form_class = InmateReleaseForm
     success_url = reverse_lazy("inmaterelease_list")
 
+    def form_valid(self, form):
+        jalali_date = form.cleaned_data['release_date']  # فرض بر این است که کاربر تاریخ جلالی وارد کرده است
+        gregorian_date = jdatetime.date(
+            jalali_date.year, jalali_date.month, jalali_date.day
+        ).togregorian()  # تبدیل تاریخ جلالی به میلادی
+        
+        form.instance.release_date = gregorian_date  # مقدار میلادی در مدل ثبت می‌شود
+        return super().form_valid(form)
+
+
 class InmateReleaseUpdateView(UpdateView):
     template_name = "InmateRelease/inmaterelease_form.html"
     model = InmateRelease
     form_class = InmateReleaseForm
-    success_url = reverse_lazy("inmaterelease_detail")
     pk_url_kwarg = "pk_object"
+    context_object_name = "inmaterelease"
+
+    def get_initial(self):
+        initial = super().get_initial()
+        instance = self.get_object()
+        if instance.release_date:  
+            gregorian_date = instance.release_date
+            jalali_date = jdatetime.date.fromgregorian(
+                year=gregorian_date.year,
+                month=gregorian_date.month,
+                day=gregorian_date.day
+            )
+            initial['release_date'] = jalali_date  # تاریخ جلالی برای نمایش در فرم
+        return initial
+
+    def form_valid(self, form):
+        jalali_date = form.cleaned_data['release_date']  # تاریخ واردشده توسط کاربر (جلالی)
+        gregorian_date = jdatetime.date(
+            jalali_date.year, jalali_date.month, jalali_date.day
+        ).togregorian()  # تبدیل به میلادی
+
+        form.instance.release_date = gregorian_date  # ذخیره تاریخ میلادی در مدل
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("inmaterelease_detail", kwargs={"pk_object": self.object.pk})
+
     
 class InmateReleaseDetail(DetailView):
     template_name = "InmateRelease/inmaterelease_detail.html"
     model = InmateRelease
     context_object_name = "inmaterelease"
+    pk_url_kwarg = "pk_object"
+
+    def get(self, request, pk_object):
+        inmate = InmateRelease.objects.get(id=pk_object)
+        inmate.release_date = conver_solar_date(inmate.release_date)
+        context = {
+            "inmaterelease": inmate
+        }
+        return render(request, self.template_name, context)
+    
