@@ -1,0 +1,19 @@
+{% extends "base.html" %}  
+
+{% block content %}  
+<div class="container mx-auto py-8 px-4">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-teal-600 mb-4">خانواده: {{ medicalaid.family }}</h2>  
+        <p class="mb-2"><strong>براورد هزینه:</strong> {{ medicalaid.estimated_cost }}</p>  
+        <p class="mb-2"><strong>نیاز ها:</strong> {{ medicalaid.medical_needs }}</p>  
+        <p class="mb-2"><strong>وضعیت:</strong>{% if medicalaid.is_active %}فعال{% else %}غیر فعال{% endif %}</p>  
+        <div class="mt-6 flex space-x-4">
+        <a href="{% url 'medicalaid_list' %}" class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 vazir-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">لیست گزارشات پزشکی</a>  
+        <a href="{% url 'medicalaid_update' medicalaid.id %}" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 vazir-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">ویرایش</a>  
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

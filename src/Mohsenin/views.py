@@ -348,6 +348,19 @@ class ObservationsUpdateView(UpdateView):
     form_class = ObservationForm
     pk_url_kwargs = "observation_id"
 
+    def get(self, request, family_id, observation_id):
+        form = ObservationForm()
+        family = Family.objects.get(id=family_id)
+        observation = Observation.objects.get(id=observation_id)
+        context = {
+            "family": family,
+            "observation": observation,
+            "form": form,
+        }
+        return render(request, self.template_name, context)
+        
+
+
     
     def get_object(self, queryset=None):
         return get_object_or_404(Observation, id=self.kwargs.get("observation_id"))
@@ -368,14 +381,6 @@ class ObservationsUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy("observation_list", kwargs={"family_id": self.object.family.id})
 
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        observation = self.get_object()  # گرفتن آبجکت مرتبط
-        family = Family.objects.get(id=self.get_object().id)
-        context['family'] = family  # ارسال family به قالب
-        context['family_id'] = observation.family.id  # ارسال family_id به قالب
-        return context
 
 
 
@@ -519,3 +524,17 @@ class MedicalAidCreateView(CreateView):
     model = MedicalAid
     form_class = MedicalAidForm
     success_url = reverse_lazy("medicalaid_list")
+
+class MedicalAidUpdateView(UpdateView):
+    template_name = "Medicalaid/medicalaid_form.html"
+    model = MedicalAid
+    form_class = MedicalAidForm
+    # success_url = reverse_lazy("medicalaid_detail")
+
+    def get_success_url(self):
+        return reverse_lazy("medicalaid_detail", kwargs={"pk":self.object.id})
+
+class MedicalAidDetailView(DetailView):
+    template_name = "Medicalaid/medicalaid_detail.html"
+    model = MedicalAid
+    context_object_name = "medicalaid"

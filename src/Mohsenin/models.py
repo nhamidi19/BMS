@@ -69,7 +69,7 @@ class PackageDistribution(models.Model):
 class MedicalAid(models.Model):
     family = models.ForeignKey(Family, on_delete=models.CASCADE)
     medical_needs = models.TextField()
-    estimated_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    estimated_cost = models.DecimalField(max_digits=10, decimal_places=0)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):

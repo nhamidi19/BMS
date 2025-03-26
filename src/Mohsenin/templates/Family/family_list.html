@@ -61,7 +61,12 @@
               </a> |  
             <a href="{% url 'family_update' family.pk %}" class="text-blue-700 text-xs">ویرایش
               </a> |  
-            <a href="{% url 'family_deactivate' family.pk %}"class="text-red-700 text-xs">حذف</a>  
+            <a href="{% url 'family_deactivate' family.pk %}"class="text-red-700 text-xs">حذف
+                |
+            </a> 
+            <a href="{% url 'observation_list' family.pk %}"class="text-yellow-700 text-xs">مشاهدات
+                
+            </a>  
         </td>  
     </tr>  
     {% endfor %}

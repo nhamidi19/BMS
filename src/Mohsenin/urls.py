@@ -48,6 +48,9 @@ urlpatterns = [
     #----- Packages Distribution
     path("medicalaids/", views.MedicalAidListView.as_view(), name="medicalaid_list"),
     path("medicalaids/add", views.MedicalAidCreateView.as_view(), name="medicalaid_create"),
+    path("medicalaids/<int:pk>/update", views.MedicalAidUpdateView.as_view(), name="medicalaid_update"),
+    path("medicalaids/<int:pk>/detail", views.MedicalAidDetailView.as_view(), name="medicalaid_detail"),
+
 
 ]
  
