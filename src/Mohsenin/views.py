@@ -538,3 +538,28 @@ class MedicalAidDetailView(DetailView):
     template_name = "Medicalaid/medicalaid_detail.html"
     model = MedicalAid
     context_object_name = "medicalaid"
+
+
+#-------------- PackageDistribution views
+class InmateReleaseListView(ListView):
+    template_name = "InmateRelease/inmaterelease_list.html"
+    model = InmateRelease
+    context_object_name = "inmatereleases"
+
+class InmateReleaseCreateView(CreateView):
+    template_name = "InmateRelease/inmaterelease_form.html"
+    model = InmateRelease
+    form_class = InmateReleaseForm
+    success_url = reverse_lazy("inmaterelease_list")
+
+class InmateReleaseUpdateView(UpdateView):
+    template_name = "InmateRelease/inmaterelease_form.html"
+    model = InmateRelease
+    form_class = InmateReleaseForm
+    success_url = reverse_lazy("inmaterelease_detail")
+    pk_url_kwarg = "pk_object"
+    
+class InmateReleaseDetail(DetailView):
+    template_name = "InmateRelease/inmaterelease_detail.html"
+    model = InmateRelease
+    context_object_name = "inmaterelease"

@@ -42,3 +42,8 @@ class MedicalAidForm(forms.ModelForm):
     class Meta:
         model = MedicalAid
         fields = "__all__"
+
+class InmateReleaseForm(forms.ModelForm):
+    class Meta:
+        model = InmateRelease
+        fields = "__all__"

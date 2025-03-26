@@ -51,6 +51,11 @@ urlpatterns = [
     path("medicalaids/<int:pk>/update", views.MedicalAidUpdateView.as_view(), name="medicalaid_update"),
     path("medicalaids/<int:pk>/detail", views.MedicalAidDetailView.as_view(), name="medicalaid_detail"),
 
+    #----- Packages Distribution
+    path("inmaterelease/", views.InmateReleaseListView.as_view(), name="inmaterelease_list"),
+    path("inmaterelease/add/", views.InmateReleaseCreateView.as_view(), name="inmaterelease_create"),
+    path("inmaterelease/<int:pk_object>/update/", views.InmateReleaseUpdateView.as_view(), name="inmaterelease_update"),
+    path("inmaterelease/int:pk_object>/", views.InmateReleaseDetail.as_view(), name="inmaterelease_detail"),
 
 ]
  
