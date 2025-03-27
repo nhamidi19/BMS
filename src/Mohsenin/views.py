@@ -202,6 +202,15 @@ class PersonCreateView(CreateView):
     template_name = 'Person/person_form.html'  
     success_url = reverse_lazy('person_list')  # Adjust to your URL's name 
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Fetch the Family object by ID, ensure the ID is properly provided
+        family_id = self.kwargs.get('family_id')  # Assuming you're passing 'family_id' in the URL
+        context['family'] = get_object_or_404(Family, id=family_id)
+        return context
+
+
+
     def post(self, request, family_id):
         family = Family.objects.get(id=family_id)
         form = NewPersonForm(request.POST)
@@ -222,17 +231,7 @@ class PersonCreateView(CreateView):
         ).togregorian()  
 
         form.instance.birth_date = gregorian_date  
-        self.object = form.save()  # Set self.object
         return super().form_valid(form)
-
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Fetch the Family object by ID, ensure the ID is properly provided
-        family_id = self.kwargs.get('family_id')  # Assuming you're passing 'family_id' in the URL
-        context['family'] = get_object_or_404(Family, id=family_id)
-        return context
-
 
 
 

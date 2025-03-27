@@ -1,11 +1,25 @@
 {% extends "base.html" %}  
 
 {% block content %}  
-<h2>{% if medicalaid %}ویرایش خدمات پزشکی{% else %}افزودن خدمات پزشکی جدید{% endif %}</h2>  
-<form method="post">  
-    {% csrf_token %}  
-    {{ form.as_p }}  
-    <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">ذخیره</button>  
-</form>  
-<a href="{% url 'medicalaid_list' %}"><button class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">انصراف</button></a>  
+<div class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto py-8 px-4">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-bold text-teal-600 mb-4">{% if medicalaid %}ویرایش خدمات پزشکی{% else %}افزودن خدمات پزشکی جدید{% endif %}</h2>
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="flex space-x-4 mt-6">
+                    <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg rounded-lg px-4 py-2 text-center">
+                        ذخیره
+                    </button>
+                    <a href="{% url 'medicalaid_list' %}">
+                        <button type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg rounded-lg px-4 py-2 text-center">
+                            انصراف
+                        </button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %} 
