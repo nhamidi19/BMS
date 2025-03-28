@@ -139,30 +139,26 @@
   <div class="py-5 vazir-medium no-print">
     <button type="button" class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><a href="{% url 'person_create' family.pk %}">افزودن عضو جدید</a></button>
     </div>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table class="w-full text-sm rtl:text-right text-gray-700 bg-white border-2 border-gray-700">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-200">
-          <tr class="vazir-semibold">
-            <th scope="col" class="px-6 py-3 text-end">نام</th>
-            <th scope="col" class="px-6 py-3 text-right">نام خانوادگی</th>
-            <th scope="col" class="px-6 py-3 text-right">نام پدر</th>
-            <th scope="col" class="px-6 py-3 text-right">شماره ملی</th>
-            <th scope="col" class="px-6 py-3 text-right">تاریخ تولد</th>
-            <th scope="col" class="px-6 py-3 text-center no-print">عملیات</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for member in members %}
-            <tr class="{% if forloop.counter|divisibleby:2 %}
-                bg-white
-              {% else %}
-                bg-indigo-50
-              {% endif %} border-b border-gray-200 hover:bg-gray-50 vazir-normal">
-              <th class="px-2">{{ member.first_name }}</th>
-              <td class="px-2">{{ member.last_name }}</td>
-              <td class="px-2">{{ member.father_name }}</td>
-              <td class="px-2">{{ member.national_id }}</td>
-              <td class="px-2">{{ member.birthday }}</td>
+   <div class="relative overflow-x-auto shadow-lg sm:rounded-lg border border-gray-700">
+      <table class="w-full text-sm rtl:text-right text-gray-700 bg-white rounded-lg overflow-hidden">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-700 text-white">
+              <tr class="vazir-semibold">
+                  <th class="px-6 py-3 text-end">نام</th>
+                  <th class="px-6 py-3 text-right">نام خانوادگی</th>
+                  <th class="px-6 py-3 text-right">نام پدر</th>
+                  <th class="px-6 py-3 text-right">شماره ملی</th>
+                  <th class="px-6 py-3 text-right">تاریخ تولد</th>
+                  <th class="px-6 py-3 text-center no-print">عملیات</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for member in members %}
+              <tr class="{% if forloop.counter|divisibleby:2 %} bg-gray-100 {% else %} bg-indigo-50 {% endif %} border-b border-gray-300 hover:bg-indigo-100 transition duration-200">
+                  <td class="px-4 py-4 font-medium text-gray-900 text-lg">{{ member.first_name }}</td>
+                  <td class="px-4 py-4 text-gray-800">{{ member.last_name }}</td>
+                  <td class="px-4 py-4 text-gray-800">{{ member.father_name }}</td>
+                  <td class="px-4 py-4 text-gray-900 font-semibold">{{ member.national_id }}</td>
+                  <td class="px-4 py-4 text-gray-800">{{ member.birth_date }}</td>
               <td class="no-print text-center border-r">
                 <div class="flex space-x-1">
                   <a href="{% url 'person_update' family.pk member.pk %}" class="text-blue-700 text-sm">
@@ -171,7 +167,7 @@
                     </svg>
                   </a>
 
-                  <a href="{% url "person_as_guardian" family.pk member.pk %}" class="text-green-700 text-sm">
+                  <a href="{% url 'person_as_guardian' family.pk member.pk %}" class="text-green-700 text-sm">
                     <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M11 9a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"/>
                       <path fill-rule="evenodd" d="M9.896 3.051a2.681 2.681 0 0 1 4.208 0c.147.186.38.282.615.255a2.681 2.681 0 0 1 2.976 2.975.681.681 0 0 0 .254.615 2.681 2.681 0 0 1 0 4.208.682.682 0 0 0-.254.615 2.681 2.681 0 0 1-2.976 2.976.681.681 0 0 0-.615.254 2.682 2.682 0 0 1-4.208 0 .681.681 0 0 0-.614-.255 2.681 2.681 0 0 1-2.976-2.975.681.681 0 0 0-.255-.615 2.681 2.681 0 0 1 0-4.208.681.681 0 0 0 .255-.615 2.681 2.681 0 0 1 2.976-2.975.681.681 0 0 0 .614-.255ZM12 6a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" clip-rule="evenodd"/>
