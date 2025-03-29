@@ -9,7 +9,7 @@ class DistForm(forms.ModelForm):
 class FamilyForm(forms.ModelForm):  
     class Meta:  
         model = Family  
-        fields = '__all__' 
+        fields = ['doc_code', 'need_level', 'family_type', 'address', 'contact_number', 'postal_code',  'is_active', 'distlist'] 
 
 class NewFamilyForm(forms.ModelForm):  
     class Meta:  

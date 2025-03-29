@@ -93,9 +93,16 @@ class FamilyDetailView(View):
 
 class FamilyUpdateView(UpdateView):  
     model = Family  
-    form_class = FamilyForm  # Use a ModelForm for Family  
+    form_class = FamilyForm    
     template_name = 'Family/family_form.html'  
-    success_url = reverse_lazy('family_list')  # Adjust to your URL's name  
+    success_url = reverse_lazy('family_list')
+
+    def form_valid(self, form):  
+        if form.is_valid():  
+            return super().form_valid(form)  
+        else:  
+            print(form.errors)  # Print errors to console or log  
+            return self.form_invalid(form)  
 
 
 class FamilyDeactivateView(View):  
