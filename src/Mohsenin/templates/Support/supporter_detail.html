@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+<h1>جزئیات حامی: {{ object }}</h1>  
+    <h2>افراد حمایت شده:</h2>  
+
+    <form method="post" action="{% url 'support-create' %}">  
+        {% csrf_token %}  
+        <input type="hidden" name="supporter" value="{{ object.pk }}">  
+        <input type="hidden" name="is_active" value="true">  
+        
+        <label for="search-national-id">جستجوی کودک بر اساس شماره ملی:</label>  
+        <input type="text" id="search-national-id" name="national_id" required>  
+        <button type="submit">جستجو</button>  
+    </form>  
+
+    <h3>نتایج جستجو:</h3>  
+    <div id="search-results">  
+        {% if searched_person %}  
+            <p>کودک پیدا شد: <strong>{{ searched_person }}</strong></p>  
+            <form method="post" action="{% url 'support-create' %}">  
+                {% csrf_token %}  
+                <input type="hidden" name="supporter" value="{{ object.pk }}">  
+                <input type="hidden" name="person" value="{{ searched_person.pk }}">  
+                <input type="hidden" name="amount" value="1000000">  <!-- Default amount; adjust as needed -->  
+                <input type="hidden" name="is_active" value="true">  
+                <button type="submit">اضافه کردن به حمایت</button>  
+            </form>  
+        {% else %}  
+            <p>کودکی با شماره ملی مورد نظر یافت نشد.</p>  
+        {% endif %}  
+    </div>  
+
+    <h3>لیست کودکان حمایت شده:</h3>  
+    <ul>  
+        {% for support in object.supports.all %}  
+            <li>{{ support.person }} - مبلغ: {{ support.amount }} | تاریخ: {{ support.support_date }}</li>  
+        {% empty %}  
+            <li>هیچ حمایتی ثبت نشده است.</li>  
+        {% endfor %}  
+    </ul>  
+
+    <a href="{% url 'supporter-list' %}">بازگشت به لیست حامیان</a> 
+
+
+{% endblock content%}

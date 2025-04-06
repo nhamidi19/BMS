@@ -1,5 +1,5 @@
 from django import forms  
-from .models import Family, Dist, Person
+from .models import Family, Dist, Person, Package, PackageDistribution, Supporter
 
 class DistForm(forms.ModelForm):
     class Meta:
@@ -21,3 +21,18 @@ class PersonForm(forms.ModelForm):
         model = Person 
         fields = '__all__'
 
+
+class PackageForm(forms.ModelForm):
+    class Meta:
+        model = Package
+        fields = "__all__"
+
+class PackageDistributionForm(forms.ModelForm):
+    class Meta:
+        model = PackageDistribution
+        fields = "__all__"
+
+class SupporterForm(forms.ModelForm):
+    class Meta:
+        model = Supporter
+        fields = "__all__"

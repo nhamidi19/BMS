@@ -2,7 +2,8 @@ from django.db import models
 
 from .choices import NEED_LEVEL_CHOICE, FAMILY_TYPE_CHOICES, ACTIVATION_CHOICE, YES_NO_CHOICE
 
-class Dist(models.Model): #Distribution List
+#لیست توزیع
+class Dist(models.Model): 
     name = models.CharField('نام لیست توزیع', max_length=100, unique=True)
     note = models.TextField('توضیحات', default="")
 
@@ -12,7 +13,7 @@ class Dist(models.Model): #Distribution List
     def __str__(self):
         return self.name
 
-# Create your models here.
+# خانواده
 class Family(models.Model):
     doc_code = models.IntegerField('شماره پرونده')
     need_level = models.IntegerField('سطح نیاز', default=1, choices=NEED_LEVEL_CHOICE)
@@ -54,11 +55,13 @@ class Observation(models.Model):
         return f"Observation for {self.family} by {self.agent_name} on {self.observation_date}"
 
 class Package(models.Model):
-    name = models.CharField(max_length=100)
-    max_members = models.PositiveIntegerField()
-    cost = models.DecimalField(max_digits=10, decimal_places=2)
-    description = models.TextField()
+    name = models.CharField('نام بسته',max_length=100)
+    max_members = models.PositiveIntegerField('ظرفیت بسته')
+    cost = models.PositiveIntegerField('ارزش ریالی هر بسته')
+    description = models.TextField('توضیحات')
 
+    def total_cost(self):
+        return self.cost * self.max_members
     def __str__(self):
         return self.name
 
@@ -98,3 +101,26 @@ class InmateRelease(models.Model):
 
     def __str__(self):
         return f"Inmate release for {self.family} on {self.release_date}"
+
+
+class Supporter(models.Model):  
+    first_name = models.CharField('نام', max_length=50)  
+    last_name = models.CharField('نام خانوادگی', max_length=50)  
+    contact_number = models.CharField('شماره تماس', max_length=15, blank=True, null=True)  
+    email = models.EmailField('ایمیل', blank=True, null=True)  
+    is_active = models.BooleanField('فعال', default=True)
+    supports_orphans_only = models.BooleanField('فقط حمایت از یتیمان', default=True, choices=YES_NO_CHOICE)  
+
+    def __str__(self):  
+        return f"{self.first_name} {self.last_name}"  
+
+class Support(models.Model):  
+    supporter = models.ForeignKey(Supporter, related_name='supports', on_delete=models.CASCADE)  
+    person = models.ForeignKey(Person, related_name='supportings', on_delete=models.CASCADE)  
+    support_date = models.DateField('تاریخ حمایت', auto_now_add=True)  
+    amount = models.DecimalField('مبلغ حمایت', max_digits=10, decimal_places=2)  # Adjust as needed  
+    is_active = models.BooleanField('فعال', default=True)  
+
+    def __str__(self):  
+        return f"{self.supporter} supports {self.person} ({self.amount}) on {self.support_date}"  
+

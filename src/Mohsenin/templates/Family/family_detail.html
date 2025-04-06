@@ -3,62 +3,62 @@
 {% block content %}
   <div class="rtl">
     {% comment %} Todo: possition it nicer {% endcomment %}
-    <h2 class="vazir-bold pt-10 text-3xl">مشخصات خانواده</h2>
+    <h2 class="vazir-bold pt-10 pb-8 text-3xl">مشخصات خانواده</h2>
     
-    <table class="w-full max-w-2xl mx-auto text-right vazir-normal text-lg">  
+    <table class="w-full max-w-2xl text-right vazir-normal text-lg">  
       <tbody>  
           <tr>  
-              <td class="text-left vazir-bold" style="max-width: 200px; white-space: nowrap;"> <!-- Adjust max-width as needed -->  
+              <td class="text-left vazir-bold" style="max-width: 200px; white-space: nowrap;"> 
                 شماره پرونده
               </td>  
               <td class="text-center px-2" style="width: 20px;">  
                   :  
               </td>  
-              <td class="text-right" style="width: 800px; white-space: nowrap;"> <!-- Adjust according to the first column -->  
+              <td class="text-right" style="width: 800px; white-space: nowrap;">  
                 {{ family.doc_code }}  
               </td>  
           </tr>
           <tr>  
-            <td class="text-left  vazir-bold" style="max-width: 200px; white-space: nowrap;"> <!-- Adjust max-width as needed -->  
-              <p><storng>سرپرست خانواده</strong></p>
+            <td class="text-left  vazir-bold" style="max-width: 200px; white-space: nowrap;">
+              سرپرست خانواده 
             </td>  
             <td class="text-center" style="width: 20px;">  
                 :  
             </td>  
-            <td class="text-right" style="width: 800px;  white-space: nowrap;"> <!-- Adjust according to the first column -->  
+            <td class="text-right" style="width: 800px;  white-space: nowrap;">
               {{ family.guardian }}  
             </td>  
           </tr>
           <tr>  
-            <td class="text-left vazir-bold" style="max-width: 200px; white-space: nowrap;"> <!-- Adjust max-width as needed -->  
+            <td class="text-left vazir-bold" style="max-width: 200px; white-space: nowrap;">   
               <p><storng>نوع نیازمندی</strong></p>
             </td>  
             <td class="text-center" style="width: 20px;">  
                 :  
             </td>  
-            <td class="text-right" style="width:800px; white-space: nowrap;"> <!-- Adjust according to the first column -->  
+            <td class="text-right" style="width:800px; white-space: nowrap;">  
               {{ family.get_family_type_display }}  
             </td>  
           </tr>
           <tr>  
-            <td class="text-left vazir-bold" style="max-width: 200px; white-space: nowrap;"> <!-- Adjust max-width as needed -->  
+            <td class="text-left vazir-bold" style="max-width: 200px; white-space: nowrap;">   
               <p><storng>سطح نیازمندی</strong></p>
             </td>  
             <td class="text-center" style="width: 20px;">  
                 :  
             </td>  
-            <td class="text-right" style="width: 800px; white-space: nowrap;"> <!-- Adjust according to the first column -->  
+            <td class="text-right" style="width: 800px; white-space: nowrap;">  
               {{ family.get_need_level_display }}  
             </td>  
           </tr>
           <tr>  
-            <td class="text-left vazir-bold" style="max-width: 200px; white-space: nowrap;"> <!-- Adjust max-width as needed -->  
+            <td class="text-left vazir-bold" style="max-width: 200px; white-space: nowrap;"> 
               <p><storng>تعداد اعضا</strong></p>
             </td>  
             <td class="text-center" style="width: 20px;">  
                 :  
             </td>  
-            <td class="text-right" style="width: 800px; white-space: nowrap;"> <!-- Adjust according to the first column -->  
+            <td class="text-right" style="width: 800px; white-space: nowrap;"> 
               {% if members %}
               {{ members|length }}
             {% else %}
@@ -67,7 +67,7 @@
             </td>  
           </tr>
           <tr>  
-            <td class="text-left vazir-bold" style="max-width: 200px; white-space: nowrap;"> <!-- Adjust max-width as needed -->  
+            <td class="text-left vazir-bold" style="max-width: 200px; white-space: nowrap;"> 
               <p><storng>آدرس محل سکونت</strong></p>
             </td>  
             <td class="text-center" style="width: 20px;">  

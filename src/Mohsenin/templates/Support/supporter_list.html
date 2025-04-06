@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+<h1>لیست حامیان</h1>  
+    <a href="{% url 'supporter-create' %}">ایجاد حامی جدید</a>  
+    
+    <ul>  
+        {% for supporter in Supporters %}  
+            <li>  
+                <a href="{% url 'supporter-detail' supporter.pk %}">{{ supporter }}</a>  
+            </li>  
+        {% empty %}  
+            <li>هیچ حامی وجود ندارد.</li>  
+        {% endfor %}  
+    </ul>
+
+    {% endblock content%}

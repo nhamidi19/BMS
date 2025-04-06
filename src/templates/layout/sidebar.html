@@ -13,8 +13,22 @@
         <li class="mb-2 flex"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
           <path fill-rule="evenodd" d="M8 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1h2a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2Zm6 1h-4v2H9a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2h-1V4Zm-3 8a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Zm2 5a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Z" clip-rule="evenodd"/>
         </svg>        
-          <a href="{% url 'dist_list'%}" class="text-white hover:underline vazir-normal">لیست های توزیع</a></li>  
-        <li class="mb-2"><a href="#" class="text-blue-500 hover:underline">Link 3</a></li>  
-        <li class="mb-2"><a href="#" class="text-blue-500 hover:underline">Link 4</a></li>  
+          <a href="{% url 'dist_list'%}" class="text-white hover:underline vazir-normal">لیست های توزیع</a>
+        </li>
+        <li class="mb-2 flex">
+          <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l7 4v8c0 3.866-3.134 7-7 7s-7-3.134-7-7V6l7-4zm0 2.828L6.828 8 12 11.172 17.172 8 12 4.828zm-5 9.744c0 2.761 2.239 5 5 5s5-2.239 5-5v-2.744l-5 3.172-5-3.172v2.744z"/>
+          </svg>
+          <a href="{% url "packages_list" %}" class="text-white hover:underline vazir-normal">مدیریت طرح‌های حمایتی</a>
+        </li>
+
+        <li class="mb-2 flex">
+          <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l7 4v8c0 3.866-3.134 7-7 7s-7-3.134-7-7V6l7-4zm0 2.828L6.828 8 12 11.172 17.172 8 12 4.828zm-5 9.744c0 2.761 2.239 5 5 5s5-2.239 5-5v-2.744l-5 3.172-5-3.172v2.744z"/>
+          </svg>
+          <a href="{% url "supporter-list" %}" class="text-white hover:underline vazir-normal">طرح های کمک ماهیانه به کودکان</a>
+        </li>
+       
+          
     </ul>  
 </aside>
